@@ -1,0 +1,7 @@
+:root{
+  --color-theme: rgb(69, 137, 255);
+  --color-disabled: rgb(197, 197, 197);
+}
+*{
+  margin: 0;
+}
