@@ -45,7 +45,26 @@ if (!computeDirDiffrence(componentFiles, docsFiles)) {
     i = i.replace(/\.vue/g, "")
     const contentName = i[0].toUpperCase() + i.slice(1)
     console.log(`正在创建文档：${i}.md`)
-    fs.writeFileSync(path.resolve(__dirname, "../docs") + "/" + i + ".md", `# ${contentName}`)
+    fs.writeFileSync(path.resolve(__dirname, "../docs") + "/" + i + ".md", `# ${contentName}
+
+
+\`\`\`html
+<rf-${i}>${contentName}</rf-${i}>
+\`\`\`
+
+## 属性
+
+| 名称     | 可选 | 类型                                | 默认值  | 介绍     |
+| -------- | ---- | ----------------------------------- | ------- | -------- |
+|  |    |                              |    |  |
+
+## 插槽
+
+| 名称     | 介绍         |
+| -------- | ------------ |
+|     |  |
+
+`)
   }
 } else {
   console.log('未发现缺少文档的组件');

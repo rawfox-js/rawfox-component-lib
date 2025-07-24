@@ -1,13 +1,9 @@
 <template>
-  <Ripple class="button" :type.attr="props.type ?? 'normal'" :loading.attt="props.loading ?? false"
+  <Ripple class="icon-button" :type.attr="props.type ?? 'normal'" :loading.attt="props.loading ?? false"
     :size.attr="props.size ?? 'default'" :disabled="props.disabled" v-bind="attrs">
-    <slot name="start">
+    <slot>
       <CircularProgress v-if="props.loading" :unknown="true"></CircularProgress>
     </slot>
-    <p>
-      <slot></slot>
-    </p>
-    <slot name="end"></slot>
   </Ripple>
 </template>
 <script setup lang="ts">
@@ -23,9 +19,6 @@ export type PropsType = {
   type?: "normal" | "outlined" | "error" | "text"
   size?: "default" | "large" | "small"
 }
-const emit = defineEmits<{
-  click: []
-}>()
 const props = defineProps<PropsType>()
 const attrs = getOuterRemoveEventAttrs()
 </script>
@@ -35,7 +28,7 @@ const attrs = getOuterRemoveEventAttrs()
   pointer-events: none;
 }
 
-.button {
+.icon-button {
   cursor: pointer;
   border-radius: 50px;
   display: inline-flex;
@@ -44,14 +37,14 @@ const attrs = getOuterRemoveEventAttrs()
   align-items: center;
   user-select: none;
   font-weight: 500;
-
+  aspect-ratio: 1 / 1;
   p {
     margin: 0 4px;
   }
 
   &[size=default] {
     font-size: 14px;
-    padding: 6px 10px;
+    padding: 6px;
 
     svg,
     ::slotted(svg) {
@@ -65,7 +58,7 @@ const attrs = getOuterRemoveEventAttrs()
 
   &[size=large] {
     font-size: 16px;
-    padding: 8px 15px;
+    padding: 8px;
 
     svg,
     ::slotted(svg) {
@@ -78,7 +71,7 @@ const attrs = getOuterRemoveEventAttrs()
   }
 
   &[size=small] {
-    padding: 5px 8px;
+    padding: 5px;
     font-size: 12px;
 
     svg,

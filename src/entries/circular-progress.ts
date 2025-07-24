@@ -1,3 +1,10 @@
 import { defineCustomElement } from 'vue';
 import circularProgress from '../components/circular-progress.vue';
-window.customElements.define('rf-circular-progress', defineCustomElement(circularProgress,{shadowRoot: true}));
+import { addOuterProperties, defineCustomProps } from '../api/addOuterProperties';
+
+const Element = addOuterProperties(
+  defineCustomElement(circularProgress, { shadowRoot: true }),
+  defineCustomProps([])
+)
+
+window.customElements.define('rf-circular-progress', Element);

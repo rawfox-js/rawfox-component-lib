@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "new": "node src/auto-new-component.cjs",
     "build": "node src/auto-entries.cjs && run-p type-check \"build-only {@}\" -- && node src/disabled-customElement.cjs && node src/auto-record-update.cjs && node src/auto-docs-entries.cjs",
     "preview": "vite preview",
     "build-only": "vite build",

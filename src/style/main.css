@@ -1,6 +1,9 @@
 :root{
   --color-theme: rgb(69, 137, 255);
   --color-disabled: rgb(197, 197, 197);
+  --color-primary: rgb(161, 161, 161);
+  --color-primary-svg: rgb(56, 56, 56);
+  --color-error: rgb(198, 0, 0);
 }
 *{
   margin: 0;

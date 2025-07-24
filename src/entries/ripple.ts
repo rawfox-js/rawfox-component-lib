@@ -1,3 +1,10 @@
 import { defineCustomElement } from 'vue';
 import ripple from '../components/ripple.vue';
-window.customElements.define('rf-ripple', defineCustomElement(ripple,{shadowRoot: true}));
+import { addOuterProperties, defineCustomProps } from '../api/addOuterProperties';
+
+const Element = addOuterProperties(
+  defineCustomElement(ripple, { shadowRoot: true }),
+  defineCustomProps([])
+)
+
+window.customElements.define('rf-ripple', Element);
