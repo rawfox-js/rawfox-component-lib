@@ -6,9 +6,9 @@
       <slot name="start" slot="start">{{ $slots.start }}</slot>
     </template>
     <div class="input-container">
-      <input v-model="value" :min="props.min" :max="props.max" :readonly="props.readonly" :disabled="props.disabled"
-        name="" :type="props.type" @focus="focused = true" @blur="focused = false" :input-mode="props.inputMode"
-        :max-length="props.maxLength" />
+      <input ref="input" @input="value = input!.value" :min="props.min" :max="props.max"
+        :readonly="props.readonly" :disabled="props.disabled" name="" :type="props.type" @focus="focused = true"
+        @blur="focused = false" :input-mode="props.inputMode ?? 'text'" :max-length="props.maxLength" />
       <div class="spin-button" v-if="!props.disabled && props.type == 'number'">
         <Ripple class="up" @click="value = (Number(value) + 1).toString()">
           <svg viewBox="0 -960 960 960">
@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import { getOuterRemoveEventAttrs } from '@/api/removeEventProps'
 import Filed from './field.vue'
-import { ref } from 'vue'
+import { ref, useTemplateRef } from 'vue'
 import Ripple from './ripple.vue'
 import { defineCustomProps, setProperty } from '@/api/addOuterProperties'
 defineOptions({
@@ -49,18 +49,19 @@ export type PropsType = {
   inputMode?: string //软键盘模式
 }
 //事件
+const input = useTemplateRef("input")
 const props = defineProps<PropsType>()
 const attrs = getOuterRemoveEventAttrs() //对根元素传递时使用v-bind=attrs
 const value = ref(props.defaultValue ?? "")
 const focused = ref(false)
 defineExpose({
-  value: value
+  value
 })
 defineCustomProps([
   {
     name: "value",
     get() {
-      return value.value
+      return value?.value
     },
     set(v) {
       setProperty(() => {
@@ -71,10 +72,11 @@ defineCustomProps([
 ])
 </script>
 <style lang="scss">
-:host{
+:host {
   display: inline-flex;
   vertical-align: middle;
 }
+
 .input {
   width: 250px;
   color: var(--color-primary);
@@ -128,9 +130,14 @@ defineCustomProps([
       border: none;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       background: transparent;
+      font-size: 14px;
 
       &:disabled {
         cursor: not-allowed;
+
+        &::placeholder {
+          color: var(--color-disabled);
+        }
       }
 
       &::-webkit-outer-spin-button,

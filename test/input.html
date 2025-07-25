@@ -27,15 +27,15 @@
         </svg>
     </rf-input>
     <rf-input class="input-2" type="text"></rf-input>
-<rf-input type="text"></rf-input>
-<rf-input type="number"></rf-input>
-<rf-input type="password"></rf-input>
+    <rf-input type="text"></rf-input>
+    <rf-input type="number"></rf-input>
+    <rf-input type="password"></rf-input>
     <script>
-const input = document.querySelector("rf-input.input-1")
-const input2 = document.querySelector("rf-input.input-2")
-input.oninput = e => {
-    input2.value = input.value
-}
+        const input = document.querySelector("rf-input.input-1")
+        const input2 = document.querySelector("rf-input.input-2")
+        input.oninput = e => {
+            input2.value = input.value
+        }
     </script>
 </body>
 

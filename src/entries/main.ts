@@ -5,3 +5,4 @@ export * from './field';
 export * from './icon-button';
 export * from './input';
 export * from './ripple';
+export * from './textarea';

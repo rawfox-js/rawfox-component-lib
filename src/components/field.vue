@@ -8,8 +8,10 @@
         </div>
       </div>
       <div class="middle-line">
-        <div class="label">{{ props.label }}</div>
-        <p class="hide">{{ props.label }}</p>
+        <div class="middle-line-container">
+          <div class="label">{{ props.label }}</div>
+          <p class="hide">{{ props.label }}</p>
+        </div>
       </div>
       <div class="end-line">
         <div class="hide">
@@ -121,6 +123,7 @@ $default-stroke-color: var(--color-primary);
     transition: all 0.2s;
     pointer-events: none;
     white-space: nowrap;
+    max-height: 50px;
   }
 
   .border {
@@ -164,7 +167,11 @@ $default-stroke-color: var(--color-primary);
       padding: 0 5px;
       transition: all 0.1s;
       position: relative;
-
+      .middle-line-container{
+        position: relative;
+        max-height: 50px;
+        height: 100%;
+      }
       p.hide {
         opacity: 0;
         pointer-events: none;

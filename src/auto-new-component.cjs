@@ -27,6 +27,7 @@ function generateTemplate(name) {
 </template>
 <script setup lang="ts">
 import { getOuterRemoveEventAttrs } from '@/api/removeEventProps'
+import { defineCustomProps, setProperty } from '@/api/addOuterProperties'
 defineOptions({
   inheritAttrs: false
 })
@@ -36,6 +37,12 @@ export type PropsType = {
 const emit = defineEmits<{}>()
 const props = defineProps<PropsType>()
 const attrs = getOuterRemoveEventAttrs()
+defineExpose({
+  //外部属性
+})
+defineCustomProps([
+  //外部属性
+])
 </script>
 <style lang="scss">
 .${name}{
