@@ -2,7 +2,7 @@
   <Field :label="props.placeholder ?? '请输入文本'" :disabled="props.disabled" :error="props.error"
     :fixed="Boolean(value.length)" class="textarea" :focus="focused" v-bind="attrs">
     <textarea @input="value = textarea!.value" ref="textarea" :disabled="props.disabled" @focus="focused = true" :input-mode="props.inputMode ?? 'text'"
-      :readonly="props.readonly" @blur="focused = false"></textarea>
+      :readonly="props.readonly" @blur="focused = false" :value="value"></textarea>
   </Field>
 </template>
 <script setup lang="ts">

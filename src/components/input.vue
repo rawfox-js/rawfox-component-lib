@@ -6,16 +6,18 @@
       <slot name="start" slot="start">{{ $slots.start }}</slot>
     </template>
     <div class="input-container">
-      <input ref="input" @input="value = input!.value" :min="props.min" :max="props.max"
+      <input ref="input" @input="value = input!.value" :min="props.min" :max="props.max" :value="value"
         :readonly="props.readonly" :disabled="props.disabled" name="" :type="props.type" @focus="focused = true"
         @blur="focused = false" :input-mode="props.inputMode ?? 'text'" :max-length="props.maxLength" />
       <div class="spin-button" v-if="!props.disabled && props.type == 'number'">
-        <Ripple class="up" @click="value = (Number(value) + 1).toString()">
+        <Ripple class="up"
+          @click="(Number(value) > (props.min ?? -99999999999999)) && (value = (Number(value) + 1).toString())">
           <svg viewBox="0 -960 960 960">
             <path d="m280-400 200-200 200 200H280Z"></path>
           </svg>
         </Ripple>
-        <Ripple class="down" @click="value = (Number(value) - 1).toString()">
+        <Ripple class="down"
+          @click="(Number(value) < (props.max ?? 99999999999999)) && (value = (Number(value) - 1).toString())">
           <svg viewBox="0 -960 960 960">
             <path d="M480-360 280-560h400L480-360Z"></path>
           </svg>

@@ -3,6 +3,7 @@ export * from './button';
 export * from './circular-progress';
 export * from './field';
 export * from './icon-button';
+export * from './icon';
 export * from './input';
 export * from './ripple';
 export * from './textarea';

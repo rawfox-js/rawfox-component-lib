@@ -33,7 +33,7 @@
 <script setup lang="ts">
 import '../style/main.css'
 import { getOuterRemoveEventAttrs } from '@/api/removeEventProps'
-import { onMounted, ref } from 'vue'
+import { ref, onMounted } from 'vue'
 defineOptions({
   inheritAttrs: false
 })
@@ -52,35 +52,40 @@ const startClone = ref<HTMLDivElement>()
 const endClone = ref<HTMLDivElement>()
 
 onMounted(() => {
-  const shadowRoot = startClone.value?.getRootNode?.()
+  const shadowRoot = startClone.value?.getRootNode()
   if (!(shadowRoot instanceof ShadowRoot)) return
 
-  const startSlot = shadowRoot.querySelector('slot[name="start"]') as HTMLSlotElement | null
-  const endSlot = shadowRoot.querySelector('slot[name="end"]') as HTMLSlotElement | null
+  const startSlot = shadowRoot.querySelector('slot[name="start"]') as HTMLSlotElement
+  const endSlot = shadowRoot.querySelector('slot[name="end"]') as HTMLSlotElement
 
-  const cloneAssigned = (slot: HTMLSlotElement | null, target: HTMLElement | undefined) => {
+  const cloneAssigned = (slot: HTMLSlotElement, target: HTMLElement) => {
     if (!slot || !target) return
     const nodes = slot.assignedNodes({ flatten: true })
     target.innerHTML = ''
-    nodes.forEach(node => {
-      if (node.nodeType === Node.TEXT_NODE && !node.textContent?.trim()) return
-      target.appendChild(node.cloneNode(true))
+    for (const node of nodes) {
+      if (node.nodeType === Node.TEXT_NODE && !node.textContent?.trim()) continue
+      const cloned = node.cloneNode(true)
+      if (cloned instanceof HTMLElement && cloned.hasAttribute('slot')) {
+        cloned.removeAttribute('slot')
+      }
+      target.appendChild(cloned)
+    }
+  }
+
+  let ticking = false
+  const runClone = () => {
+    if (ticking) return
+    ticking = true
+    requestAnimationFrame(() => {
+      if (startSlot && startClone.value) cloneAssigned(startSlot, startClone.value)
+      if (endSlot && endClone.value) cloneAssigned(endSlot, endClone.value)
+      ticking = false
     })
   }
 
-  if (startSlot) {
-    startSlot.addEventListener('slotchange', () => {
-      cloneAssigned(startSlot, startClone.value)
-    })
-    cloneAssigned(startSlot, startClone.value)
-  }
-
-  if (endSlot) {
-    endSlot.addEventListener('slotchange', () => {
-      cloneAssigned(endSlot, endClone.value)
-    })
-    cloneAssigned(endSlot, endClone.value)
-  }
+  startSlot?.addEventListener('slotchange', runClone)
+  endSlot?.addEventListener('slotchange', runClone)
+  runClone()
 })
 </script>
 <style lang="scss">
@@ -99,15 +104,14 @@ $default-stroke-color: var(--color-primary);
     opacity: 0;
   }
 
-  svg,
+  ::slotted(rf-icon),
   ::slotted(svg),
-  img,
   ::slotted(img) {
     width: 30px;
     height: 30px;
-    fill: currentColor;
-    color: var(--color-primary-svg);
   }
+
+  color: var(--color-primary-svg) !important;
 
   .label {
     font-size: 14px;
@@ -167,11 +171,13 @@ $default-stroke-color: var(--color-primary);
       padding: 0 5px;
       transition: all 0.1s;
       position: relative;
-      .middle-line-container{
+
+      .middle-line-container {
         position: relative;
         max-height: 50px;
         height: 100%;
       }
+
       p.hide {
         opacity: 0;
         pointer-events: none;
@@ -213,6 +219,12 @@ $default-stroke-color: var(--color-primary);
       display: flex;
       justify-content: center;
       align-items: center;
+
+      rf-icon {
+        width: 30px;
+        height: 30px;
+        color: currentColor;
+      }
     }
   }
 
@@ -236,12 +248,7 @@ $default-stroke-color: var(--color-primary);
       }
     }
 
-    svg,
-    ::slotted(svg),
-    img,
-    ::slotted(img) {
-      color: var(--color-theme);
-    }
+    color: var(--color-theme) !important;
 
     .label {
       color: var(--color-theme);
@@ -279,12 +286,7 @@ $default-stroke-color: var(--color-primary);
       border-bottom: $stroke solid var(--color-error) !important;
     }
 
-    svg,
-    ::slotted(svg),
-    img,
-    ::slotted(img) {
-      color: var(--color-error) !important;
-    }
+    color: var(--color-error) !important;
 
     .middle-line {
       border-bottom: $stroke solid var(--color-error) !important;
@@ -309,12 +311,7 @@ $default-stroke-color: var(--color-primary);
       border-bottom: $stroke solid var(--color-disabled);
     }
 
-    svg,
-    ::slotted(svg),
-    img,
-    ::slotted(img) {
-      color: var(--color-disabled);
-    }
+    color: var(--color-disabled) !important;
 
     .middle-line {
       border-bottom: $stroke solid var(--color-disabled);

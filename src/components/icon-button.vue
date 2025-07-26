@@ -28,7 +28,7 @@ const attrs = getOuterRemoveEventAttrs()
   pointer-events: none;
 }
 
-.icon-button {
+:host .icon-button {
   cursor: pointer;
   border-radius: 50px;
   display: inline-flex;
@@ -46,11 +46,11 @@ const attrs = getOuterRemoveEventAttrs()
     font-size: 14px;
     padding: 6px;
 
-    svg,
-    ::slotted(svg) {
-      $size: 20px;
-      fill: currentColor;
-      stroke: currentColor;
+    ::slotted(rf-icon),
+    ::slotted(rf-circular-progress), rf-icon, rf-circular-progress {
+      $size: 20px !important;
+      fill: currentColor !important;
+      stroke: currentColor !important;
       width: $size;
       height: $size;
     }
@@ -60,9 +60,9 @@ const attrs = getOuterRemoveEventAttrs()
     font-size: 16px;
     padding: 8px;
 
-    svg,
-    ::slotted(svg) {
-      $size: 22px;
+    ::slotted(rf-icon),
+    ::slotted(rf-circular-progress), rf-icon, rf-circular-progress {
+      $size: 22px !important;
       fill: currentColor;
       stroke: currentColor;
       width: $size;
@@ -74,9 +74,9 @@ const attrs = getOuterRemoveEventAttrs()
     padding: 5px;
     font-size: 12px;
 
-    svg,
-    ::slotted(svg) {
-      $size: 15px;
+    ::slotted(rf-icon),
+    ::slotted(rf-circular-progress), rf-icon, rf-circular-progress {
+      $size: 15px !important;
       fill: currentColor;
       stroke: currentColor;
       width: $size;
@@ -87,13 +87,13 @@ const attrs = getOuterRemoveEventAttrs()
   &[type=normal] {
     background-color: var(--color-theme);
     border: 1.5px solid var(--color-theme);
-    color: white;
+    color: white !important;
     transition: all 0.2s;
 
     &:hover,
     &:active {
       background-color: transparent;
-      color: var(--color-theme);
+      color: var(--color-theme) !important;
       box-shadow: 0px 2px 3px rgba(28, 28, 28, 0.315);
     }
 
@@ -108,7 +108,7 @@ const attrs = getOuterRemoveEventAttrs()
   &[type=outlined] {
     border: 1.5px solid var(--color-theme);
     transition: all 0.2s;
-    color: var(--color-theme);
+    color: var(--color-theme) !important;
 
     &:hover,
     &:active {
@@ -127,7 +127,7 @@ const attrs = getOuterRemoveEventAttrs()
   &[type=error] {
     border: 1.5px solid red;
     transition: all 0.2s;
-    color: red;
+    color: red !important;
 
     .rip {
       background-color: rgba(255, 0, 0, 0.382);
@@ -150,7 +150,7 @@ const attrs = getOuterRemoveEventAttrs()
   &[type=text] {
     border: 1.5px solid transparent;
     transition: all 0.2s;
-    color: var(--color-theme);
+    color: var(--color-theme) !important;
 
     &:hover,
     &:active {

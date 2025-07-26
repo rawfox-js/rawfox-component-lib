@@ -30,7 +30,6 @@ const value = computed(() => {
   width: 50px;
   height: 50px;
   stroke: var(--color-theme);
-
   &[unknown=true] {
     stroke-dashoffset: 49px;
     animation: circular-progress 1s linear infinite forwards;

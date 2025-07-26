@@ -53,6 +53,9 @@ const attrs = getOuterRemoveEventAttrs()
     font-size: 14px;
     padding: 6px 10px;
 
+    ::slotted(rf-icon),
+    ::slotted(rf-circular-progress),
+    .loader,
     svg,
     ::slotted(svg) {
       $size: 20px;
@@ -67,6 +70,9 @@ const attrs = getOuterRemoveEventAttrs()
     font-size: 16px;
     padding: 8px 15px;
 
+    ::slotted(rf-icon),
+    ::slotted(rf-circular-progress),
+    .loader,
     svg,
     ::slotted(svg) {
       $size: 22px;
@@ -81,6 +87,9 @@ const attrs = getOuterRemoveEventAttrs()
     padding: 5px 8px;
     font-size: 12px;
 
+    ::slotted(rf-icon),
+    ::slotted(rf-circular-progress),
+    .loader,
     svg,
     ::slotted(svg) {
       $size: 15px;
